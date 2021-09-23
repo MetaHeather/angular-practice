@@ -9,7 +9,7 @@ import { HeroesComponent } from './heroes/heroes.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent
+    HeroesComponent 
   ],
   imports: [
     BrowserModule,
