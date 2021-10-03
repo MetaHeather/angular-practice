@@ -12,4 +12,3 @@ export const HEROES: Hero[] = [
 { id: 19, name: 'Magma', heroscore: 97 },
 { id: 20, name: 'Tornado', heroscore: 84 }
 ];
-
