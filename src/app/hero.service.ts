@@ -12,7 +12,11 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root'})
 export class HeroService {
 
-  private heroesUrl = 'api/heroes';
+  private heroesUrl = 'api/heroes';//URl to web api
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type':'application/json' })
+  };
 
   constructor(
     private http: HttpClient,
@@ -22,6 +26,7 @@ export class HeroService {
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl)
     .pipe(
+      tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
     );
   }
@@ -33,12 +38,23 @@ export class HeroService {
     return of(hero);
   }
 
+  /** Save Methods **/ 
+
+  //PUT: update the hero on the server//
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions)
+    .pipe(
+      tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+
   //log a HeroService message with the MessageService
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
-
-  /**
+/**
  * Handle Http operation that failed.
  * Let the app continue.
  * @param operation - name of the operation that failed
